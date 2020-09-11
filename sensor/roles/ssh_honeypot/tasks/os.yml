@@ -1,13 +1,14 @@
 - name: Get systems public_ip
-  become: yes
-  become_user: ec2-user
   ipify_facts:
   register: public_ip
+
 
 - name: Update all the things!
   yum:
     name: '*'
     state: latest
+  vars:
+    ansible_python_interpreter: /usr/bin/python
 
 # Workaround for bug: https://github.com/ansible/ansible/issues/56583
 # In future, will use yum module's `lock_timeout: 60`
@@ -22,7 +23,9 @@
       - python-pip
       - firewalld
     state: latest
-    # lock_timeout: 60 # Ansible bug: https://github.com/ansible/ansible/issues/56583
+    lock_timeout: 60 # Ansible bug: https://github.com/ansible/ansible/issues/56583
+  vars:
+    ansible_python_interpreter: /usr/bin/python
 
 - name: Start firewalld
   systemd:
@@ -35,3 +38,5 @@
     permanent: yes
     immediate: yes
     state: enabled
+  vars:
+    ansible_python_interpreter: /usr/bin/python
