@@ -1,3 +1,4 @@
 #!/bin/sh
+git pull
 cd sensor
-../.venvs/bin/ansible-playbook main.yml
+ansible-playbook main.yml
