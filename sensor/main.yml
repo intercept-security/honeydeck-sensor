@@ -1,5 +1,5 @@
 ---
-- name: Honeypot servers
+- name: Honeydeck Sensor Updater
   hosts:
     - localhost
   become: yes
@@ -7,7 +7,7 @@
   strategy: free 
   gather_facts: no 
   tasks:
-    - name: Install Ansible Roles
+    - name: Install Sensor Roles
       include_role:
         name: "{{ item }}"
       loop: "{{ sensor_roles }}"
