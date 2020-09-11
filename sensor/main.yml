@@ -1,10 +1,13 @@
 ---
 - name: Honeypot servers
   hosts:
-    - all
-  roles:
-    - ssh_honeypot
+    - localhost
   become: yes
   become_method: sudo
   strategy: free 
   gather_facts: no 
+  tasks:
+    - name: Install Ansible Roles
+      include_role:
+        name: "{{ item }}"
+      loop: "{{ sensor_roles }}"
