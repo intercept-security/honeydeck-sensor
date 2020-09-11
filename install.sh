@@ -9,4 +9,4 @@ fi
 sudo yum install python3 git -y
 
 # Install required pip packages
-sudo pip3 -r install requirements.txt
+sudo pip3 install -r requirements.txt
