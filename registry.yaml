@@ -1,0 +1,14 @@
+meta:
+    version: "0.0.1"
+
+roles:
+    ssh_honeypot:
+        role_name: "SSH Honeypot"
+        path: "ssh_honeypot"
+        version: "0.0.1"
+        enabled: True
+    ids_sensor:
+        role_name: "Network Sensor"
+        path: "ids"
+        version: "0.0.0"
+        enabled: False
