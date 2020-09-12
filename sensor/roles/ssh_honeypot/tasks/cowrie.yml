@@ -28,6 +28,12 @@
     virtualenv_command: "python3 -m venv"
     requirements: "{{ cowrie_dir_basename }}/requirements.txt"
 
+- name: Allow cowrie-env python executable to bind to 22
+  capabilities:
+    path: "{{ pwd.stdout }}/{{ ssh_honeypot_dir }}/cowrie-env/bin/python"
+    capability: "cap_net_bind_service=+ep"
+    state: present
+
 ### TODO:
 ### In the future, we will use uri: to get json from the cloud and convert it to a dictionary
 ### Then we can loop through the settins and generate our own config file
@@ -54,9 +60,16 @@
     option: sensor_name
     value: "{{ ipify_public_ip }}"
 
+- name: Set sensor name
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: internet_facing_ip
+    value: "{{ ipify_public_ip }}"
+
 - name: Set listen port for cowrie
   ini_file:
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: ssh
     option: listen_endpoints
-    value: "tcp:22:interface=0.0.0.0"
+    value: "tcp6:22:interface=\\:\\:"
