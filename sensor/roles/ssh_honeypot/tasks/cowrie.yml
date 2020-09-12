@@ -51,7 +51,7 @@
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: hostname
-    value: "{{ ipify_public_ip }}"
+    value: "{{ public_ip }}"
   notify: "Start or restart cowrie"
 
 - name: Set sensor name
@@ -67,7 +67,7 @@
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: internet_facing_ip
-    value: "{{ ipify_public_ip }}"
+    value: "{{ public_ip }}"
   notify: "Start or restart cowrie"
 
 - name: Set listen port for cowrie
