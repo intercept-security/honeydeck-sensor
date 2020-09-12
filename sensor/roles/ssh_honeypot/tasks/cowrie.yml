@@ -33,31 +33,30 @@
 ### Then we can loop through the settins and generate our own config file
 - name: Copy cowrie basic config file
   copy:
-    src: "{{ cowrie_run_dir }}/cowrie.cfg.dist"
-    dest: "{{ cowrie_run_dir }}/cowrie.cfg"
+    src: "{{ cowrie_run_dir }}/etc/cowrie.cfg.dist"
+    dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     remote_src: yes
 
 - name: Get system's public_ip to set hostname
   ipify_facts:
-  register: public_ip
 
 - name: Set fake hostname
   ini_file:
-    path: "{{ cowrie_run_dir }}/cowrie.cfg"
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
-    option: "{{ hostname }}"
-    value: "{{ public_ip }}"
+    option: hostname
+    value: "{{ ipify_public_ip }}"
 
 - name: Set sensor name
   ini_file:
-    path: "{{ cowrie_run_dir }}/cowrie.cfg"
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
-    option: "{{ sensor_name }}"
-    value: "{{ public_ip }}"
+    option: sensor_name
+    value: "{{ ipify_public_ip }}"
 
 - name: Set listen port for cowrie
   ini_file:
-    path: "{{ cowrie_run_dir }}/cowrie.cfg"
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: ssh
-    option: "{{ listen_endpoints }}"
+    option: listen_endpoints
     value: "tcp:22:interface=0.0.0.0"
