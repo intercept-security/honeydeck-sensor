@@ -9,6 +9,10 @@
     - name: Include honeydeck-sensor.yml vars
       include_vars:
         file: ../honeydeck-sensor.yml
+    
+    - name: Validate Credentials
+      include_role:
+        name: sensor_validation
 
     - name: Install Sensor Roles
       include_role:
