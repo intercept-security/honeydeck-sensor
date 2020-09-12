@@ -1,7 +1,12 @@
 ---
-- name: OS configuration
-  include_tasks: "{{ item }}"
+- name: SSH Honeypot Configuration
+  include_tasks:
+    file: "{{ item.filename }}"
+    apply:
+      become: "{{ item.become | default('no') }}"
   loop:
-    - os.yml
-    # - ssh_port_swap.yml
-    # - cowrie.yml
+    - filename: os.yml
+      become: yes
+    - filename: ssh_port_swap.yml
+      become: yes
+    - filename: cowrie.yml

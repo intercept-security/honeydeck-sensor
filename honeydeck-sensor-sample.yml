@@ -1,0 +1,10 @@
+# Honeydeck Sensor name. Public IP address will be used if not specified
+sensor_name:
+
+# Honeydeck credentials used to gather configs and report data
+honeydeck_server: https://dunder-mifflin.honeydeck.io
+honeydeck_token: effb87c630dbcda73a95d2b2d35e4753
+
+# Sensor roles. Roles defined here will install and configure necessary modules
+sensor_roles:
+    - ssh_honeypot

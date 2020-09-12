@@ -1,8 +1,4 @@
 ---
-- name: Define ssh_honeypot module directory
-  set_fact: 
-    ssh_honeypot_dir: ../modules/ssh_honeypot
-
 - name: Create a directory if it does not exist
   file:
     path: "{{ ssh_honeypot_dir }}"
@@ -14,3 +10,76 @@
     dest: "{{ ssh_honeypot_dir }}"
     remote_src: yes
 
+# Workaround for: https://github.com/ansible/ansible/issues/22967#issuecomment-500604054
+- name: Get present working directory
+  command: pwd
+  register: pwd
+  changed_when: false
+
+- name: Create virtualenv for cowrie
+  pip:
+    chdir: "{{ pwd.stdout }}/{{ cowrie_run_dir }}"
+    virtualenv: "cowrie-env"
+    virtualenv_command: "python3 -m venv --copies"
+    requirements: "requirements.txt"
+
+- name: Allow cowrie-env python executable to bind to 22
+  capabilities:
+    path: "{{ pwd.stdout }}/{{ cowrie_run_dir }}/cowrie-env/bin/python"
+    capability: "cap_net_bind_service=+ep"
+    state: present
+  become: True
+
+- name: Allow cowrie-env python3 executable to bind to 22
+  capabilities:
+    path: "{{ pwd.stdout }}/{{ cowrie_run_dir }}/cowrie-env/bin/python3"
+    capability: "cap_net_bind_service=+ep"
+    state: present
+  become: True
+
+### TODO:
+### In the future, we will use uri: to get json from the cloud and convert it to a dictionary
+### Then we can loop through the settins and generate our own config file
+- name: Copy cowrie basic config file
+  copy:
+    src: "{{ cowrie_run_dir }}/etc/cowrie.cfg.dist"
+    dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    remote_src: yes
+
+- name: Get system's public_ip to set hostname
+  ipify_facts:
+
+- name: Set fake hostname
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: hostname
+    value: "{{ ipify_public_ip }}"
+  notify: "Start or restart cowrie"
+
+- name: Set sensor name
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: sensor_name
+    value: "{{ ipify_public_ip }}"
+  notify: "Start or restart cowrie"
+
+- name: Set sensor name
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: internet_facing_ip
+    value: "{{ ipify_public_ip }}"
+  notify: "Start or restart cowrie"
+
+- name: Set listen port for cowrie
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: ssh
+    option: listen_endpoints
+    value: "tcp6:22:interface=\\:\\:"
+  notify: "Start or restart cowrie"
+
+- name: Flush handlers to start cowrie
+  meta: flush_handlers

@@ -1,0 +1,9 @@
+---
+- name: Restart sshd
+  systemd:
+    name: sshd
+    state: restarted
+  become: yes
+
+- name: Start or restart cowrie
+  command: "{{ cowrie_run_dir }}/bin/cowrie restart"
