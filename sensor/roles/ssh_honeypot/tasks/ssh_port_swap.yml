@@ -1,10 +1,6 @@
 - name: Setup alternate SSH port
   lineinfile:
     dest: "/etc/ssh/sshd_config"
-    regexp: "^#Port"
-    line: "#Port 22\nPort {{ replacement_ssh_port }}"
-  
-- name: Restart sshd, probably
-  systemd:
-    name: sshd
-    state: restarted
+    regexp: "^Port"
+    line: "Port {{ replacement_ssh_port }}"
+  notify: Restart sshd
