@@ -1,0 +1,5 @@
+# Ignore ansible retries
+**/.retry
+
+# Ignore settings file
+honeydeck-sensor.yml
