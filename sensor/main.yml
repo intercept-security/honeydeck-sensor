@@ -2,8 +2,7 @@
 - name: Honeydeck Sensor Updater
   hosts:
     - localhost
-  become: yes
-  become_method: sudo
+  become: no
   strategy: free 
   gather_facts: no 
   tasks:

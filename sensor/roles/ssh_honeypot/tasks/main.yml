@@ -1,7 +1,8 @@
 ---
 - name: OS configuration
-  include_tasks: "{{ item }}"
+  include_tasks: "{{ item.filename }}"
+  apply: "{{ item.applies }}"
   loop:
-    - os.yml
-    - ssh_port_swap.yml
-    - cowrie.yml
+    - { filename: "os.yml", applies: { become: True } }
+    - { filename: "ssh_port_swap.yml", applies: { become: True } }
+    - { filename: "cowrie.yml" }

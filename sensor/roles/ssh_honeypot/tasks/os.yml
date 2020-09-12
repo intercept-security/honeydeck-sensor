@@ -1,4 +1,7 @@
 ---
+# Defaults:
+#   become: yes
+
 - name: Update all the things!
   yum:
     name: '*'
