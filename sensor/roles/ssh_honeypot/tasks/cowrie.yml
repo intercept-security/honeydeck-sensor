@@ -2,6 +2,7 @@
 - name: Define ssh_honeypot module directory
   set_fact: 
     ssh_honeypot_dir: ../modules/ssh_honeypot
+    cowrie_run_dir: "../modules/ssh_honeypot/{{ cowrie_dir_basename }}"
 
 - name: Create a directory if it does not exist
   file:
@@ -26,3 +27,37 @@
     virtualenv: "cowrie-env"
     virtualenv_command: "python3 -m venv"
     requirements: "{{ cowrie_dir_basename }}/requirements.txt"
+
+### TODO:
+### In the future, we will use uri: to get json from the cloud and convert it to a dictionary
+### Then we can loop through the settins and generate our own config file
+- name: Copy cowrie basic config file
+  copy:
+    src: "{{ cowrie_run_dir }}/cowrie.cfg.dist"
+    dest: "{{ cowrie_run_dir }}/cowrie.cfg"
+    remote_src: yes
+
+- name: Get system's public_ip to set hostname
+  ipify_facts:
+  register: public_ip
+
+- name: Set fake hostname
+  ini_file:
+    path: "{{ cowrie_run_dir }}/cowrie.cfg"
+    section: honeypot
+    option: "{{ hostname }}"
+    value: "{{ public_ip }}"
+
+- name: Set sensor name
+  ini_file:
+    path: "{{ cowrie_run_dir }}/cowrie.cfg"
+    section: honeypot
+    option: "{{ sensor_name }}"
+    value: "{{ public_ip }}"
+
+- name: Set listen port for cowrie
+  ini_file:
+    path: "{{ cowrie_run_dir }}/cowrie.cfg"
+    section: ssh
+    option: "{{ listen_endpoints }}"
+    value: "tcp:22:interface=0.0.0.0"

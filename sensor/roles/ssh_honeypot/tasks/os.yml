@@ -1,8 +1,4 @@
 ---
-- name: Get systems public_ip
-  ipify_facts:
-  register: public_ip
-
 - name: Update all the things!
   yum:
     name: '*'
