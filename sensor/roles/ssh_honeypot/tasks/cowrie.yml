@@ -23,14 +23,20 @@
 
 - name: Create virtualenv for cowrie
   pip:
-    chdir: "{{ pwd.stdout }}/{{ ssh_honeypot_dir }}"
+    chdir: "{{ pwd.stdout }}/{{ cowrie_run_dir }}"
     virtualenv: "cowrie-env"
-    virtualenv_command: "python3 -m venv"
-    requirements: "{{ cowrie_dir_basename }}/requirements.txt"
+    virtualenv_command: "python3 -m venv --copies"
+    requirements: "requirements.txt"
 
 - name: Allow cowrie-env python executable to bind to 22
   capabilities:
-    path: "{{ pwd.stdout }}/{{ ssh_honeypot_dir }}/cowrie-env/bin/python"
+    path: "{{ pwd.stdout }}/{{ cowrie_run_dir }}/cowrie-env/bin/python"
+    capability: "cap_net_bind_service=+ep"
+    state: present
+
+- name: Allow cowrie-env python3 executable to bind to 22
+  capabilities:
+    path: "{{ pwd.stdout }}/{{ cowrie_run_dir }}/cowrie-env/bin/python3"
     capability: "cap_net_bind_service=+ep"
     state: present
 
