@@ -10,3 +10,5 @@
   - Add `sensor_name` (optionally)
 - Run `./install.sh` as a user with sudo privilegs
 - Run `./update.sh` as a user with sudo privileges
+
+**Tested on Amazon Linux, using ec2-user**
