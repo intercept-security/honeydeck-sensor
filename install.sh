@@ -9,7 +9,7 @@ UPDATER_PATH="$(dirname $(realpath ${0}))/update.sh"
 CURRENT_BRANCH="$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')"
 
 sudo mkdir -p ${LOG_DIR}
-sudo touch ${LOG_FILE}}
+sudo touch ${LOG_FILE}
 
 sudo echo "###### $(date) Performing Install ######" | sudo tee -a ${LOG_FILE}
 sudo echo "### UPDATE_INTERVAL: ${UPDATE_INTERVAL}" | sudo tee -a ${LOG_FILE}
