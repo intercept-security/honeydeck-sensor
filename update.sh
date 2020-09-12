@@ -14,6 +14,7 @@ sudo echo "### CURRENT_BRANCH: ${CURRENT_BRANCH}" | sudo tee -a ${LOG_FILE}
 
 
 sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${LOG_FILE}
+git reset --hard
 git pull
 
 sudo echo "### Deploying updater playbook" | sudo tee -a ${LOG_FILE}
