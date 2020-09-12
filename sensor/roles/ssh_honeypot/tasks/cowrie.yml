@@ -14,9 +14,15 @@
     dest: "{{ ssh_honeypot_dir }}"
     remote_src: yes
 
+# Workaround for: https://github.com/ansible/ansible/issues/22967#issuecomment-500604054
+- name: Get present working directory
+  command: pwd
+  register: pwd
+  changed_when: false
+
 - name: Create virtualenv for cowrie
   pip:
-    chdir: "{{ ssh_honeypot_dir }}"
+    chdir: "{{ pwd.stdout }}/{{ ssh_honeypot_dir }}"
     virtualenv: "cowrie-env"
     virtualenv_command: "python3 -m venv"
     requirements: "{{ cowrie_dir_basename }}/requirements.txt"
