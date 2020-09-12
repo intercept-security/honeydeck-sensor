@@ -6,4 +6,4 @@
   become: yes
 
 - name: Start or restart cowrie
-  command: "{{ cowrie_run_dir }} restart"
+  command: "{{ cowrie_run_dir }}/bin/cowrie restart"
