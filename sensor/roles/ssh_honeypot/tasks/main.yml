@@ -3,5 +3,5 @@
   include_tasks: "{{ item }}"
   loop:
     - os.yml
-    # - ssh_port_swap.yml
-    # - cowrie.yml
+    - ssh_port_swap.yml
+    - cowrie.yml

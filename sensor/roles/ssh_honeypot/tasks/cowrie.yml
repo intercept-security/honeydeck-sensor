@@ -14,3 +14,8 @@
     dest: "{{ ssh_honeypot_dir }}"
     remote_src: yes
 
+- name: Create virtualenv for cowrie
+  pip:
+    chdir: "{{ ssh_honeypot_dir }}"
+    virtualenv: "cowrie-env"
+    requirements: "{{ cowrie_dir_basename }}/requirements.txt"
