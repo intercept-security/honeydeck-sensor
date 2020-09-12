@@ -1,3 +1,10 @@
+# Current ssh_honeypot module version
+ssh_honeypot_version: "0.0.1"
+
+# Module directory information
+ssh_honeypot_dir: "{{ modules_dir }}/ssh_honeypot"
+cowrie_run_dir: "{{ modules_dir }}/ssh_honeypot/{{ cowrie_dir_basename }}"
+
 # Port to move "real" ssh listener to
 replacement_ssh_port: 22222
 

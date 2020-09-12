@@ -3,3 +3,6 @@
   systemd:
     name: sshd
     state: restarted
+
+- name: Start or restart cowrie
+  command: "{{ cowrie_run_dir }} restart"
