@@ -46,15 +46,12 @@
     dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     remote_src: yes
 
-- name: Get system's public_ip to set hostname
-  ipify_facts:
-
 - name: Set fake hostname
   ini_file:
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: hostname
-    value: "{{ ipify_public_ip }}"
+    value: "{{ public_ip }}"
   notify: "Start or restart cowrie"
 
 - name: Set sensor name
@@ -62,15 +59,15 @@
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: sensor_name
-    value: "{{ ipify_public_ip }}"
+    value: "{{ sensor_name }}"
   notify: "Start or restart cowrie"
 
-- name: Set sensor name
+- name: Set cowrie internet facing ip
   ini_file:
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: internet_facing_ip
-    value: "{{ ipify_public_ip }}"
+    value: "{{ public_ip }}"
   notify: "Start or restart cowrie"
 
 - name: Set listen port for cowrie

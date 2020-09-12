@@ -1,1 +1,5 @@
 modules_dir: "../modules"
+
+required_variables:
+  - honeydeck_server
+  - honeydeck_token
