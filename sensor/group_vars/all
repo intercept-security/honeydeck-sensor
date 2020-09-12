@@ -1,4 +1,0 @@
-sensor_roles:
-    - ssh_honeypot
-
-modules_dir: "../modules"
