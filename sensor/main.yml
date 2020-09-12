@@ -6,6 +6,13 @@
   strategy: free 
   gather_facts: no 
   tasks:
+    - name: Get system's public_ip
+      ipify_facts:
+
+    - name: Set public IP fact
+      set_fact:
+        public_ip: "{{ ipify_public_ip }}"
+
     - name: Include honeydeck-sensor.yml vars
       include_vars:
         file: ../honeydeck-sensor.yml
