@@ -1,7 +1,7 @@
 ---
-- name: Check required vars
-  fail: msg="The variable {{ item }} is not defined"
-  when: (item is not defined) or (item|length == 0)
+- name: Fail if missing required variables
+  fail: msg="The variable {{ item }} is must be defined"
+  when: (vars[item] is undefined) or (vars[item] == "") or (vars[item] == vars[item] | bool) or not (vars[item] | default('') | length > 0)
   loop: "{{ required_variables }}"
 
 - name: Get system's public_ip
@@ -10,4 +10,5 @@
 - name: Set sensor_name to public IP if not defined
   set_fact:
     sensor_name: "{{ ipify_public_ip }}"
-  when: (sensor_name is not defined) or (sensor_name|length == 0)
+  when: (sensor_name is undefined) or (sensor_name == "") or (sensor_name == sensor_name | bool) or not (sensor_name | default('') | length > 0)
+
