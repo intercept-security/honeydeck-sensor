@@ -18,4 +18,5 @@
   pip:
     chdir: "{{ ssh_honeypot_dir }}"
     virtualenv: "cowrie-env"
+    virtualenv_command: "python3 -m venv"
     requirements: "{{ cowrie_dir_basename }}/requirements.txt"
