@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ###### Honeydeck Sensor Install Script ######
 
@@ -31,7 +31,7 @@ sudo echo "### Installing required pip packages" | sudo tee ${LOG_FILE}
 pip3 install -r requirements.txt
 
 sudo echo "### Adding cron updater" | sudo tee ${LOG_FILE}
-grep "sh ${UPDATER_PATH}" /etc/crontab || \
+sudo grep "sh ${UPDATER_PATH}" /etc/crontab || \
     sudo echo "*/${UPDATE_INTERVAL} *  *  *  * sh honeydeck-sensor/update.sh" >> /etc/crontab
 
 sudo echo "###### $(date) Completed Install ######" | sudo tee ${LOG_FILE}
