@@ -7,7 +7,20 @@
 # TODO: Validate honeypot credentials
 
 # TODO: Get sensor_name from server
-- name: Set sensor_name to public IP if not defined
+
+- name: Discover config from Honeydeck Server
+  uri: 
+    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    headers: 
+      HONEYDECK_TOKEN: "{{ honeydeck_token }}"
+  register: discovery_response
+  failed_when: discovery_response.status == 404 or discovery_response == 503
+
+- name: Parse config json
+  set_fact: 
+    sensor_config: {{ discovery_response.msg | from_json }}
+
+- name: Set sensor_name to configured name
   set_fact:
-    sensor_name: "{{ public_ip }}"
-  when: (sensor_name is undefined) or (sensor_name == "") or (sensor_name == sensor_name | bool) or not (sensor_name | default('') | length > 0)
+    sensor_name: "{{ sensor_config.name }}"
+    sensor_roles: "{{ sensor_config.roles }}"
