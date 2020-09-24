@@ -4,20 +4,21 @@
   when: (vars[item] is undefined) or (vars[item] == "") or (vars[item] == vars[item] | bool) or not (vars[item] | default('') | length > 0)
   loop: "{{ required_variables }}"
 
-# TODO: Validate honeypot credentials
 - name: Check that honeypot token is valid
-
-
-- name: Set sensor name from server
   uri:
-    url: "{{ honeydeck_server }}"
+    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
     method: GET 
     return_content: yes
     headers:
       Content-Type: "application/json"
       Honeydeck-Token: "{{ honeydeck_token }}"
-  register: sensor_validate
+  register: hd_sensor_validate
 
+#- name: Set sensor name from server
+- name: Set sensor_name to public IP if not defined
+  set_fact:
+    sensor_name: "{{ hd_sensor_validate.content.name }}"
+  when: hd_sensor_validate.status == 200
 
 - name: Set sensor_name to public IP if not defined
   set_fact:
