@@ -5,8 +5,20 @@
   loop: "{{ required_variables }}"
 
 # TODO: Validate honeypot credentials
+- name: Check that honeypot token is valid
 
-# TODO: Get sensor_name from server
+
+- name: Set sensor name from server
+  uri:
+    url: "{{ honeydeck_server }}"
+    method: GET 
+    return_content: yes
+    headers:
+      Content-Type: "application/json"
+      Honeydeck-Token: "{{ honeydeck_token }}"
+  register: sensor_validate
+
+
 - name: Set sensor_name to public IP if not defined
   set_fact:
     sensor_name: "{{ public_ip }}"
