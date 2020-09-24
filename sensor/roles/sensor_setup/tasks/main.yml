@@ -14,13 +14,7 @@
       Honeydeck-Token: "{{ honeydeck_token }}"
   register: hd_sensor_validate
 
-#- name: Set sensor name from server
-- name: Set sensor_name to public IP if not defined
+- name: Set sensor name from server
   set_fact:
-    sensor_name: "{{ hd_sensor_validate.content.name }}"
+    sensor_name: "{{ hd_sensor_validate.json.name }}"
   when: hd_sensor_validate.status == 200
-
-- name: Set sensor_name to public IP if not defined
-  set_fact:
-    sensor_name: "{{ public_ip }}"
-  when: (sensor_name is undefined) or (sensor_name == "") or (sensor_name == sensor_name | bool) or not (sensor_name | default('') | length > 0)
