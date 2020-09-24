@@ -1,0 +1,20 @@
+---
+- name: Fail if missing required variables
+  fail: msg="The variable {{ item }} is must be defined"
+  when: (vars[item] is undefined) or (vars[item] == "") or (vars[item] == vars[item] | bool) or not (vars[item] | default('') | length > 0)
+  loop: "{{ required_variables }}"
+
+- name: Check that honeypot token is valid
+  uri:
+    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    method: GET 
+    return_content: yes
+    headers:
+      Content-Type: "application/json"
+      Honeydeck-Token: "{{ honeydeck_token }}"
+  register: hd_sensor_validate
+
+- name: Set sensor name from server
+  set_fact:
+    sensor_name: "{{ hd_sensor_validate.json.name }}"
+  when: hd_sensor_validate.status == 200

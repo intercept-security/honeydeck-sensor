@@ -1,0 +1,14 @@
+---
+  - name: Report Success to Server
+    uri:
+      url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+      method: POST
+      body_format: json
+      body: "{{ body | to_json }}"
+      return_content: no
+      headers:
+        Content-Type: "application/json"
+        Honeydeck-Token: "{{ honeydeck_token }}"
+    vars:
+      body:
+        success: True
