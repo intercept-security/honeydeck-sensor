@@ -25,7 +25,3 @@
       include_role:
         name: "{{ item }}"
       loop: "{{ sensor_roles }}"
-
-    # - name: Report success or failure
-    #   include_role:
-    #     name: sensor_setup_check-in_update
