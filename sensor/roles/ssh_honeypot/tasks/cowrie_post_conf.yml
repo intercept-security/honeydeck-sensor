@@ -1,0 +1,33 @@
+---
+### TODO:
+### In the future, we will use uri: to get json from the cloud and convert it to a dictionary
+### Then we can loop through the settins and generate our own config file
+- name: Copy cowrie basic config file
+  copy:
+    src: "{{ cowrie_run_dir }}/etc/cowrie.cfg.dist"
+    dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    remote_src: yes
+
+- name: Set fake hostname
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: hostname
+    value: "{{ public_ip }}"
+  notify: "Start or restart cowrie"
+
+- name: Set sensor name
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: sensor_name
+    value: "{{ sensor_name }}"
+  notify: "Start or restart cowrie"
+
+- name: Set cowrie internet facing ip
+  ini_file:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    section: honeypot
+    option: internet_facing_ip
+    value: "{{ public_ip }}"
+  notify: "Start or restart cowrie"

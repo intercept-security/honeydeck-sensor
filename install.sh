@@ -20,6 +20,7 @@ sudo echo "### Installing Required Packages" | sudo tee -a ${LOG_FILE}
 sudo yum install python3 git -y
 
 sudo echo "### Adding github's ssh fingerprints" | sudo tee -a ${LOG_FILE}
+mkdir ~/.ssh
 if ! grep -q "^github.com" ~/.ssh/known_hosts; then
     ssh-keyscan -t rsa github.com tee -a ~/.ssh/known_hosts
 fi

@@ -1,0 +1,38 @@
+---
+- name: Get checksum of current config file
+  stat:
+    path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
+    checksum_algorithm: md5
+    get_checksum: no
+    get_attributes: no
+    get_mime: no
+  register: cowrie_cfg_stat
+
+- name: Get Latest config from honeydeck server
+  uri:
+    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    method: GET
+    return_content: yes
+    headers:
+      Content-Type: "application/json"
+      Honeydeck-Token: "{{ honeydeck_token }}"
+  register: honeydeck_discover
+
+- name: print honeydeck response
+  debug:
+    msg: "{{ honeydeck_discover }}"
+
+- name: Report Success to Server
+  uri:
+    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    method: POST
+    body_format: json
+    body: "{{ body | to_json }}"
+    return_content: no
+    headers:
+      Content-Type: "application/json"
+      Honeydeck-Token: "{{ honeydeck_token }}"
+  vars:
+    body:
+      success: True
+      checksum: cowrie_cfg_stat.stat.checksum
