@@ -6,7 +6,7 @@
 
 - name: Check that honeypot token is valid
   uri:
-    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
     method: GET 
     return_content: yes
     headers:

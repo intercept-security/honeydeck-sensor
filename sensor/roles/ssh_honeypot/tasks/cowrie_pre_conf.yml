@@ -10,7 +10,7 @@
 
 - name: Get Latest config from honeydeck server
   uri:
-    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
     method: GET
     return_content: yes
     headers:
@@ -24,7 +24,7 @@
 
 - name: Report Success to Server
   uri:
-    url: "{{ honeydeck_server }}/api/v1/sensors/discover/"
+    url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
     method: POST
     body_format: json
     body: "{{ body | to_json }}"
