@@ -3,7 +3,7 @@
   stat:
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     checksum_algorithm: md5
-    get_checksum: no
+    get_checksum: yes
     get_attributes: no
     get_mime: no
   register: cowrie_cfg_stat
@@ -18,10 +18,6 @@
       Honeydeck-Token: "{{ honeydeck_token }}"
   register: honeydeck_discover
 
-- name: print honeydeck response
-  debug:
-    msg: "{{ honeydeck_discover }}"
-
 - name: Report Success to Server
   uri:
     url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
@@ -35,4 +31,4 @@
   vars:
     body:
       success: True
-      checksum: cowrie_cfg_stat.stat.checksum
+      checksum: "{{ cowrie_cfg_stat.stat.checksum }}"
