@@ -13,15 +13,20 @@
     url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
     method: GET
     return_content: yes
-    dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     headers:
       Content-Type: "application/json"
       Honeydeck-Token: "{{ honeydeck_token }}"
-  register: honeydeck_discover
+  register: honeydeck_server_config
+
+- name: Write cowrie config from server
+  copy:
+    # Dirty hack until we have more than one config to look at
+    content:  "{{ honeydeck_server_config.json.configs[0].config }}"
+    dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
 
 - name: Report Success to Server
   uri:
-    url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
+    url: "{{ honeydeck_server}}/api/v1/sensors/discovery/"
     method: POST
     body_format: json
     body: "{{ body | to_json }}"
