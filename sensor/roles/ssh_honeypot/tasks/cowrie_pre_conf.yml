@@ -13,6 +13,7 @@
     url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
     method: GET
     return_content: yes
+    dest: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     headers:
       Content-Type: "application/json"
       Honeydeck-Token: "{{ honeydeck_token }}"
