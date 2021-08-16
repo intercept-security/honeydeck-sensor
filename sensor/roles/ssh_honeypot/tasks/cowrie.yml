@@ -4,7 +4,7 @@
     path: "{{ ssh_honeypot_dir }}"
     state: directory
 
-- name: Unarchive a file that needs to be downloaded (added in 2.0)
+- name: Download and unarchive cowrie release from github
   unarchive:
     src: "{{ cowrie_release_url }}"
     dest: "{{ ssh_honeypot_dir }}"

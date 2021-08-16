@@ -37,4 +37,4 @@
   vars:
     body:
       success: True
-      checksum: "{{ cowrie_cfg_stat.stat.checksum }}"
+      checksum: "{{ cowrie_cfg_stat.stat.checksum | default('') }}"
