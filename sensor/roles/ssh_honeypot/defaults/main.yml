@@ -9,5 +9,5 @@ cowrie_run_dir: "{{ modules_dir }}/ssh_honeypot/{{ cowrie_dir_basename }}"
 replacement_ssh_port: 22222
 
 # Link to cowrie download and version
-cowrie_release_url: https://codeload.github.com/cowrie/cowrie/zip/v2.1.0
-cowrie_dir_basename: cowrie-2.1.0
+cowrie_release_url: https://codeload.github.com/cowrie/cowrie/zip/v2.2.0
+cowrie_dir_basename: cowrie-2.2.0
