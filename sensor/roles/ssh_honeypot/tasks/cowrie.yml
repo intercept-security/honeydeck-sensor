@@ -23,6 +23,13 @@
     virtualenv_command: "python3 -m venv --copies"
     requirements: "requirements.txt"
 
+- name: Create virtualenv for cowrie
+  pip:
+    chdir: "{{ pwd.stdout }}/{{ cowrie_run_dir }}"
+    virtualenv: "cowrie-env"
+    virtualenv_command: "python3 -m venv --copies"
+    name: elasticsearch
+
 - name: Allow cowrie-env python executable to bind to 22
   capabilities:
     path: "{{ pwd.stdout }}/{{ cowrie_run_dir }}/cowrie-env/bin/python"
