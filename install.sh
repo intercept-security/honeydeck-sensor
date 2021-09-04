@@ -17,7 +17,7 @@ sudo echo "### UPDATER_PATH: ${UPDATER_PATH}" | sudo tee -a ${LOG_FILE}
 sudo echo "### CURRENT_BRANCH: ${CURRENT_BRANCH}" | sudo tee -a ${LOG_FILE}
 
 sudo echo "### Installing Required Packages" | sudo tee -a ${LOG_FILE}
-sudo yum install python3 git -y
+sudo yum install python3 git jq -y
 
 sudo echo "### Adding github's ssh fingerprints" | sudo tee -a ${LOG_FILE}
 mkdir ~/.ssh
@@ -29,6 +29,7 @@ sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${L
 git pull
 
 sudo echo "### Installing required pip packages" | sudo tee -a ${LOG_FILE}
+pip3 install wheel
 pip3 install -r requirements.txt
 
 sudo echo "### Adding cron updater" | sudo tee -a ${LOG_FILE}
