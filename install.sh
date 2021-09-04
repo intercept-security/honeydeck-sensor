@@ -29,7 +29,8 @@ sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${L
 git pull
 
 sudo echo "### Installing required pip packages" | sudo tee -a ${LOG_FILE}
-pip3 install -r requirements.txt
+pip3 install --user wheel
+pip3 install --user -r requirements.txt
 
 sudo echo "### Adding cron updater" | sudo tee -a ${LOG_FILE}
 sudo crontab -l > .tmp_honeydeck_install_cron

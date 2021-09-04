@@ -19,10 +19,11 @@ sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${L
 git reset --hard
 git pull
 
-pip install -r requirements.txt
+pip3 install --user -r requirements.txt
 
 sudo echo "### Deploying updater playbook" | sudo tee -a ${LOG_FILE}
 cd sensor
+ansible-galaxy collection install community.general
 ansible-playbook main.yml
 
 sudo echo "###### $(date) Completed Sensor Update ######" | sudo tee -a ${LOG_FILE}

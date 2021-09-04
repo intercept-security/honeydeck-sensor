@@ -4,11 +4,11 @@ sensor_name:
 # Honeydeck credentials used to gather configs and report data
 # `honeydeck_token` can be left blank if registering via ./register_sensor.sh
 honeydeck_server: https://dunder-mifflin.honeydeck.io
-honeydeck_token: effb87c630dbcda73a95d2b2d35e4753
+honeydeck_token: 
 
 # Self-Registration
 # `sensor_group_token` is only required if registering a new sensor via ./register_sensor.sh
-sensor_group_token: uLrjHu7z8IQ1SmP80XncE490ZUX7d8hj6cwUa61B
+sensor_group_token: 
 
 # Sensor roles. Roles defined here will install and configure necessary modules
 sensor_roles:
