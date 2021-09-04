@@ -68,8 +68,8 @@ new_token="$(echo "$server_response" | yq -r .token)"
 
 # Update config file with new values
 echo "INFO: Updating $HONEYDECK_CONFIG_FILE with new values" | sudo tee -a ${LOG_FILE}
-python util/update_honeydeck_config.py "$HONEYDECK_CONFIG_FILE" sensor_name "$new_name"
-python util/update_honeydeck_config.py "$HONEYDECK_CONFIG_FILE" honeydeck_token "$new_token"
+python3 util/update_honeydeck_config.py "$HONEYDECK_CONFIG_FILE" sensor_name "$new_name"
+python3 util/update_honeydeck_config.py "$HONEYDECK_CONFIG_FILE" honeydeck_token "$new_token"
 
 # Complete
 sudo echo "###### $(date) Completed Sensor Registration ######" | sudo tee -a ${LOG_FILE}
