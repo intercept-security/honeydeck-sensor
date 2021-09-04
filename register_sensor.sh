@@ -8,8 +8,8 @@ LOG_FILE="${LOG_DIR}/log.txt"
 
 HONEYDECK_CONFIG_FILE="honeydeck-sensor.yml"
 
-# sudo mkdir -p ${LOG_DIR}
-# sudo touch ${LOG_FILE}
+sudo mkdir -p ${LOG_DIR}
+sudo touch ${LOG_FILE}
 
 sudo echo "###### $(date) Performing Sensor Registration ######" | sudo tee -a ${LOG_FILE}
 
