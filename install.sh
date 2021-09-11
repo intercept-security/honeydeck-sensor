@@ -39,7 +39,7 @@ grep "${UPDATER_PATH}" .tmp_honeydeck_install_cron
 
 if [ $? -gt 0 ]
 then
-    echo "${UPDATE_CRON} cd ${SCRIPT_DIR} sh ${UPDATER_PATH}" | tee -a .tmp_honeydeck_install_cron
+    echo "${UPDATE_CRON} cd ${SCRIPT_DIR} && sh ${UPDATER_PATH}" | tee -a .tmp_honeydeck_install_cron
     crontab .tmp_honeydeck_install_cron
 fi
 rm .tmp_honeydeck_install_cron
