@@ -2,6 +2,7 @@
 
 ###### Honeydeck Sensor Install Script ######
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 LOG_DIR=/var/log/honeydeck/sensor
 LOG_FILE="${LOG_DIR}/log.txt"
 UPDATE_CRON="*/15 *  *  *  *"  # Every 15 minutes by default
@@ -38,8 +39,8 @@ grep "${UPDATER_PATH}" .tmp_honeydeck_install_cron
 
 if [ $? -gt 0 ]
 then
-    echo "${UPDATE_CRON} sh ${UPDATER_PATH}" | tee -a .tmp_honeydeck_install_cron
-    sudo crontab .tmp_honeydeck_install_cron
+    echo "${UPDATE_CRON} cd ${SCRIPT_DIR} && sh ${UPDATER_PATH}" | tee -a .tmp_honeydeck_install_cron
+    crontab .tmp_honeydeck_install_cron
 fi
 rm .tmp_honeydeck_install_cron
 
