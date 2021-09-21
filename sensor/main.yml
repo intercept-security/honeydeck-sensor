@@ -4,7 +4,7 @@
     - localhost
   become: no
   strategy: free 
-  gather_facts: no 
+  gather_facts: yes
   tasks:
     - name: Get system's public_ip
       ipify_facts:

@@ -4,6 +4,7 @@
 # Example Userdata Script 
 # Can be used with AWS Launch Templates to create self-registering
 # autoscaling groups for sensors
+# Tested with Amazon Linux 2
 ##################################################################
 
 HONEYDECK_SERVER="< honeydeck_server_url_goes_here >"
