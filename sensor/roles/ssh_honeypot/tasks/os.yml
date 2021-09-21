@@ -8,6 +8,13 @@
     state: latest
   vars:
     ansible_python_interpreter: /usr/bin/python
+  when: ansible_os_family=='RedHat'
+
+- name: Update all the things!
+  apt:
+    name: '*'
+    state: latest
+  when: ansible_os_family=='Debian'
 
 # Workaround for bug: https://github.com/ansible/ansible/issues/56583
 # In future, will use yum module's `lock_timeout: 60`
@@ -15,6 +22,7 @@
   wait_for:
     path: "/var/run/yum.pid"
     state: absent
+  when: ansible_os_family=='RedHat'
 
 - name: Install required packages
   yum:
@@ -25,6 +33,16 @@
     lock_timeout: 60 # Ansible bug: https://github.com/ansible/ansible/issues/56583
   vars:
     ansible_python_interpreter: /usr/bin/python
+  when: ansible_os_family=='RedHat'
+
+- name: Install required packages
+  apt:
+    name: 
+      - firewalld
+      - unzip
+      - python3-venv
+    state: latest
+  when: ansible_os_family=='Debian'
 
 - name: Start firewalld
   systemd:
@@ -39,3 +57,12 @@
     state: enabled
   vars:
     ansible_python_interpreter: /usr/bin/python
+  when: ansible_os_family=='RedHat'
+
+- name: Open Alternative SSH Port
+  firewalld:
+    port: "{{ replacement_ssh_port }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: ansible_os_family=='Debian'
