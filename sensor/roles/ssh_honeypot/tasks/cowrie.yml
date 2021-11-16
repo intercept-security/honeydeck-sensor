@@ -48,7 +48,7 @@
   include_tasks:
     file: cowrie_pre_conf.yml
 
-- name: Include pre-configurations from honeydeck server
+- name: Include post-configurations from honeydeck server
   include_tasks:
     file: cowrie_post_conf.yml
 

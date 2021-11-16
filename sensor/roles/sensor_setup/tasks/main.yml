@@ -12,9 +12,9 @@
     headers:
       Content-Type: "application/json"
       Honeydeck-Token: "{{ honeydeck_token }}"
-  register: hd_sensor_validate
+  register: hd_sensor_validated
 
 - name: Set sensor name from server
   set_fact:
-    sensor_name: "{{ hd_sensor_validate.json.name }}"
-  when: hd_sensor_validate.status == 200
+    sensor_name: "{{ hd_sensor_validated.json.name }}"
+  when: hd_sensor_validated.status == 200
