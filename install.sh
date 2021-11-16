@@ -23,7 +23,7 @@ sudo yum install python3 git -y
 sudo echo "### Adding github's ssh fingerprints" | sudo tee -a ${LOG_FILE}
 mkdir ~/.ssh
 if ! grep -q "^github.com" ~/.ssh/known_hosts; then
-    ssh-keyscan -t rsa github.com tee -a ~/.ssh/known_hosts
+    ssh-keyscan -t rsa github.com | tee -a ~/.ssh/known_hosts
 fi
 
 sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${LOG_FILE}
