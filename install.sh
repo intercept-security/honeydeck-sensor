@@ -30,7 +30,9 @@ sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${L
 git pull
 
 sudo apt update
-sudo apt install pip3
+sudo apt install pip3 -y
+export PATH=$PATH:$HOME/.local/bin
+sudo pip3 install --upgrade pip
 
 sudo echo "### Installing required pip packages" | sudo tee -a ${LOG_FILE}
 pip3 install --user wheel

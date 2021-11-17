@@ -71,5 +71,7 @@ echo "INFO: Updating $HONEYDECK_CONFIG_FILE with new values" | sudo tee -a ${LOG
 python3 util/update_honeydeck_config.py "$HONEYDECK_CONFIG_FILE" sensor_name "$new_name"
 python3 util/update_honeydeck_config.py "$HONEYDECK_CONFIG_FILE" honeydeck_token "$new_token"
 
+./update.sh
+
 # Complete
 sudo echo "###### $(date) Completed Sensor Registration ######" | sudo tee -a ${LOG_FILE}
