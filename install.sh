@@ -29,6 +29,9 @@ fi
 sudo echo "### Fetching latest version from ${CURRENT_BRANCH}" | sudo tee -a ${LOG_FILE}
 git pull
 
+sudo apt update
+sudo apt install pip3
+
 sudo echo "### Installing required pip packages" | sudo tee -a ${LOG_FILE}
 pip3 install --user wheel
 pip3 install --user -r requirements.txt
