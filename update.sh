@@ -5,6 +5,7 @@
 CURRENT_BRANCH="$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')"
 LOG_DIR=/var/log/honeydeck/sensor
 LOG_FILE="${LOG_DIR}/log.txt"
+export PATH=$PATH:$HOME/.local/bin
 
 sudo mkdir -p ${LOG_DIR}
 sudo touch ${LOG_FILE}
