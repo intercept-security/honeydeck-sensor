@@ -2,4 +2,4 @@
 **/.retry
 
 # Ignore settings file
-honeydeck-sensor.yml
+honeydeck_sensor.yml

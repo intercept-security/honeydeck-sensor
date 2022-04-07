@@ -4,7 +4,7 @@
 
 - name: Include the sensor configuration vars
   include_vars:
-    file: ../honeydeck-sensor.yml
+    file: ../honeydeck_sensor.yml
     name: honeydeck_sensor
 
 - name: Check for existing sensor token and honeydeck server and end play if not configured
@@ -35,7 +35,7 @@
     sensor_name: "{{ hd_sensor_validated.json.name }}"
   when: hd_sensor_validated.status == 200
 
-- name: Install sensor roles based on honeydeck-sensor.yml configuration
+- name: Install sensor roles based on honeydeck_sensor.yml configuration
   include_role:
     name: "{{ item }}"
   loop: "{{honeydeck_sensor.sensor_roles }}"
