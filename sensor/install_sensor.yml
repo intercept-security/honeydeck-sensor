@@ -1,0 +1,12 @@
+---
+- name: Honeydeck Sensor Installer
+  hosts:
+    - localhost
+  become: no
+  strategy: free 
+  gather_facts: yes
+  tasks:
+    - name: Perform initial sensor install
+      include_role:
+        name: sensor_install
+

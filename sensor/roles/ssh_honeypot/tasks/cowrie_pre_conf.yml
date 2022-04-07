@@ -10,12 +10,12 @@
 
 - name: Get Latest config from honeydeck server
   uri:
-    url: "{{ honeydeck_server }}/api/v1/sensors/discovery/"
+    url: "{{ honeydeck_sensor.honeydeck_server }}/api/v1/sensors/discovery/"
     method: GET
     return_content: yes
     headers:
       Content-Type: "application/json"
-      Honeydeck-Token: "{{ honeydeck_token }}"
+      Honeydeck-Token: "{{ honeydeck_sensor.honeydeck_token }}"
   register: honeydeck_server_config
 
 - name: Write cowrie config from server
@@ -26,14 +26,14 @@
 
 - name: Report Success to Server
   uri:
-    url: "{{ honeydeck_server}}/api/v1/sensors/discovery/"
+    url: "{{ honeydeck_sensor.honeydeck_server}}/api/v1/sensors/discovery/"
     method: PUT
     body_format: json
     body: "{{ body | to_json }}"
     return_content: no
     headers:
       Content-Type: "application/json"
-      Honeydeck-Token: "{{ honeydeck_token }}"
+      Honeydeck-Token: "{{ honeydeck_sensor.honeydeck_token }}"
   vars:
     body:
       success: True

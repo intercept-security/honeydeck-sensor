@@ -1,0 +1,66 @@
+---
+- name: Include the sensor configuration vars
+  include_vars:
+    file: ../honeydeck-sensor.yml
+    name: honeydeck_sensor
+
+- name: Check for existing sensor token and end play if configured
+  debug:
+    msg: "The honeydeck sensor token is already configured, ending play to prevent sensor duplication"
+  when: 
+    - honeydeck_sensor.honeydeck_token is defined
+
+- name: Check for existing sensor token and end play if configured
+  meta: end_play
+  when:
+    - honeydeck_sensor.honeydeck_token is defined
+
+- name: Attempt to register sensor with Resonate Platform server with specified name
+  uri:
+    url: "{{ honeydeck_sensor.honeydeck_server }}/api/v1/sensors/discovery/"
+    method: POST
+    body_format: json
+    body:
+      name: "{{ honeydeck_sensor.sensor_name }}"
+    headers:
+      Content-Type: application/json
+      Honeydeck-Group-Token: "{{ honeydeck_sensor.sensor_group_token }}"
+  register: registration_response
+  when:
+    - honeydeck_sensor.sensor_name is defined
+
+- name: Set sensor_name/sensor_token values
+  set_fact:
+    response: "{{ registration_response }}"
+  when:
+    - honeydeck_sensor.sensor_name is defined
+
+- name: Attempt to register sensor with Resonate Platform server with random name
+  uri:
+    url: "{{ honeydeck_sensor.honeydeck_server }}/api/v1/sensors/discovery/"
+    method: POST
+    headers:
+      Content-Type: application/json
+      Honeydeck-Group-Token: "{{ honeydeck_sensor.sensor_group_token }}"
+  register: registration_response
+  when:
+    - honeydeck_sensor.sensor_name is not defined
+
+- name: Set sensor_name/sensor_token values
+  set_fact:
+    response: "{{ registration_response }}"
+  when:
+    - honeydeck_sensor.sensor_name is not defined
+
+- name: Update honeydeck sensor name configuration value
+  lineinfile:
+    path: ../honeydeck-sensor.yml
+    regexp: '^#\s+sensor_name:'
+    line: "sensor_name: {{ response.json.name }}"
+  when: honeydeck_sensor.sensor_name is not defined
+
+- name: Update honeydeck sensor token configuration value
+  lineinfile:
+    path: ../honeydeck-sensor.yml
+    regexp: '^#\s+honeydeck_token:'
+    line: "honeydeck_token: {{ response.json.token }}"

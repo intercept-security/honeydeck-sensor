@@ -1,0 +1,19 @@
+---
+# Workaround for: https://github.com/ansible/ansible/issues/22967#issuecomment-500604054
+- name: Get present working directory
+  command: pwd
+  register: pwd
+  changed_when: false
+
+- name: Create virtualenv for sensor
+  pip:
+    chdir: "{{ pwd.stdout }}/../"
+    virtualenv: "resonate_venv"
+    virtualenv_command: "python3 -m venv --copies"
+    requirements: "{{ pwd.stdout }}/roles/sensor_install/files/requirements.txt"
+
+- name: Create cronjob for updating sensor
+  cron:
+    name: resonate_sensor
+    minute: "*/15"
+    job: "{{ pwd.stdout }}/../update.sh"

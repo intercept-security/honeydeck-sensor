@@ -4,7 +4,7 @@
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: hostname
-    value: "{{ public_ip }}"
+    value: "{{ ipify_public_ip }}"
   notify: "Start or restart cowrie"
 
 - name: Set sensor name
@@ -20,5 +20,5 @@
     path: "{{ cowrie_run_dir }}/etc/cowrie.cfg"
     section: honeypot
     option: internet_facing_ip
-    value: "{{ public_ip }}"
+    value: "{{ ipify_public_ip }}"
   notify: "Start or restart cowrie"
