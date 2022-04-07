@@ -22,11 +22,11 @@ systemctl start fail2ban
 su - ec2-user -c "cd ~ec2-user && git clone https://github.com/intercept-security/honeydeck-sensor.git"
 
 instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'sensor_name: $instance_id' >> honeydeck-sensor.yml"
+su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'sensor_name: $instance_id' >> honeydeck_sensor.yml"
 
-su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'honeydeck_server: $HONEYDECK_SERVER' >> honeydeck-sensor.yml"
-su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'sensor_group_token: $SENSOR_GROUP_TOKEN' >> honeydeck-sensor.yml"
-su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'sensor_roles: [ \"ssh_honeypot\" ]' >> honeydeck-sensor.yml"
+su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'honeydeck_server: $HONEYDECK_SERVER' >> honeydeck_sensor.yml"
+su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'sensor_group_token: $SENSOR_GROUP_TOKEN' >> honeydeck_sensor.yml"
+su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && echo 'sensor_roles: [ \"ssh_honeypot\" ]' >> honeydeck_sensor.yml"
 
 su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && ./install.sh"
 su - ec2-user -c "cd ~ec2-user/honeydeck-sensor && ./register_sensor.sh"

@@ -2,7 +2,7 @@
 #
 # An unfortunate utility to update yaml values while preserving comments and order, since python yq doesn't.
 # Accepts a .yaml file, key to change, and new value
-# USAGE: ./util/update_yaml.py honeydeck-sensor.yml sensor_name host01
+# USAGE: ./util/update_yaml.py honeydeck_sensor.yml sensor_name host01
 #
 # Currently doesn't support nested values
 # 

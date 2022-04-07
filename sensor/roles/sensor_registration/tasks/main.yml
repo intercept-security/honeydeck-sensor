@@ -1,7 +1,7 @@
 ---
 - name: Include the sensor configuration vars
   include_vars:
-    file: ../honeydeck-sensor.yml
+    file: ../honeydeck_sensor.yml
     name: honeydeck_sensor
 
 - name: Check for existing sensor token and end play if configured
@@ -54,13 +54,13 @@
 
 - name: Update honeydeck sensor name configuration value
   lineinfile:
-    path: ../honeydeck-sensor.yml
+    path: ../honeydeck_sensor.yml
     regexp: '^#\s+sensor_name:'
     line: "sensor_name: {{ response.json.name }}"
   when: honeydeck_sensor.sensor_name is not defined
 
 - name: Update honeydeck sensor token configuration value
   lineinfile:
-    path: ../honeydeck-sensor.yml
+    path: ../honeydeck_sensor.yml
     regexp: '^#\s+honeydeck_token:'
     line: "honeydeck_token: {{ response.json.token }}"
