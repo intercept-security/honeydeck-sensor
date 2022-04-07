@@ -1,0 +1,11 @@
+---
+- name: Honeydeck Sensor Registration
+  hosts:
+    - localhost
+  become: no
+  strategy: free 
+  gather_facts: yes
+  tasks:
+    - name: Perform sensor update
+      include_role:
+        name: sensor_update

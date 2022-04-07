@@ -25,13 +25,15 @@
     headers:
       Content-Type: application/json
       Honeydeck-Group-Token: "{{ honeydeck_sensor.sensor_group_token }}"
-  when: honeydeck_sensor.sensor_name is defined
   register: registration_response
+  when:
+    - honeydeck_sensor.sensor_name is defined
 
 - name: Set sensor_name/sensor_token values
   set_fact:
     response: "{{ registration_response }}"
-  when: honeydeck_sensor.sensor_name is defined
+  when:
+    - honeydeck_sensor.sensor_name is defined
 
 - name: Attempt to register sensor with Resonate Platform server with random name
   uri:
@@ -40,25 +42,25 @@
     headers:
       Content-Type: application/json
       Honeydeck-Group-Token: "{{ honeydeck_sensor.sensor_group_token }}"
-  when: honeydeck_sensor.sensor_name is not defined
   register: registration_response
+  when:
+    - honeydeck_sensor.sensor_name is not defined
 
 - name: Set sensor_name/sensor_token values
   set_fact:
     response: "{{ registration_response }}"
-  when: honeydeck_sensor.sensor_name is not defined
+  when:
+    - honeydeck_sensor.sensor_name is not defined
 
 - name: Update honeydeck sensor name configuration value
   lineinfile:
-    path: ../honeydeck_sensor.yml
-    regexp: '^sensor_name'
-    insertafter: '^#\s+sensor_name'
+    path: ../honeydeck-sensor.yml
+    regexp: '^#\s+sensor_name:'
     line: "sensor_name: {{ response.json.name }}"
   when: honeydeck_sensor.sensor_name is not defined
 
 - name: Update honeydeck sensor token configuration value
   lineinfile:
-    path: ../honeydeck_sensor.yml
-    regexp: '^honeydeck_token'
-    insertafter: '^#\s+honeydeck_token'
+    path: ../honeydeck-sensor.yml
+    regexp: '^#\s+honeydeck_token:'
     line: "honeydeck_token: {{ response.json.token }}"
