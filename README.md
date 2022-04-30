@@ -43,7 +43,9 @@ This has a major caveat: `src_ip` data will always show as the docker bridge/rou
 
 #### Running in Production
 
-In order to report the correct `src_ip`, the container must be run in "host" mode. This runs the container on the host's network stack rather than via the docker bridge.
+In order to report the correct `src_ip`, the container must be run in "host" mode. This runs the container on the host's network stack rather than via the docker bridge. 
+
+Note: This mode is only supported on linux hosts.
 
 In order for this to work, the host machine must have port 22 open and available for use ([for example, the default SSH service should be relocated](https://docs.rackspace.com/support/how-to/change-the-ssh-port-in-centos-and-redhat/)).
 
