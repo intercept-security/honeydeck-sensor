@@ -27,8 +27,8 @@ docker build -t resonate-sensor-dev .
 Make a copy of [docker/docker_RS.env](docker/docker_RS_sample.env), and then edit the necessary variables.
 
 ```bash
-cp docker/docker_RS_sample.env
-vim docker/docker_RS_sample.env
+cp docker/docker_RS_sample.env docker_RS.env
+vim docker/docker_RS.env
 ```
 
 For development purposes, you can use something like:
@@ -52,8 +52,8 @@ In order for this to work, the host machine must have port 22 open and available
 Make a copy of [docker/docker_RS.env](docker/docker_RS_sample.env), and then edit the necessary variables.
 
 ```bash
-cp docker/docker_RS_sample.env
-vim docker/docker_RS_sample.env
+cp docker/docker_RS_sample.env docker_RS.env
+vim docker/docker_RS.env
 ```
 
 Afterwards, you can run: 
