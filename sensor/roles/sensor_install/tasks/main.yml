@@ -17,3 +17,4 @@
     name: resonate_sensor
     minute: "*/15"
     job: "{{ pwd.stdout }}/../update.sh"
+  when: not (lookup('env', 'RS_IS_DOCKER') | bool)
