@@ -10,3 +10,5 @@
     - filename: ssh_port_swap.yml
       become: yes
     - filename: cowrie.yml
+    - filename: system_service.yml
+      become: yes

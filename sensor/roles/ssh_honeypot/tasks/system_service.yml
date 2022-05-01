@@ -1,0 +1,21 @@
+---
+# - name: Ensure systemd cowrie directory exists
+#   file:
+#     path: /etc/systemd/system/cowrie.service
+#     state: directory
+
+- name: Get cowrie absolute path
+  shell: "cd {{ cowrie_run_dir}} && pwd"
+  register: cowrie_full_path
+
+- name: Ensure systemd configuration file is present
+  template:
+    src: cowrie.service.j2
+    dest: /etc/systemd/system/cowrie.service
+
+- name: Ensure cowrie systemd is started and enabled
+  systemd:
+    name: cowrie
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
