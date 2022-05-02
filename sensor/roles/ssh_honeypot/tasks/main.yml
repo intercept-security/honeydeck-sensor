@@ -1,12 +1,20 @@
 ---
+- name: OS Configurations
+  include_tasks:
+    file: "os.yml"
+    apply:
+      become: yes
+  when: not (lookup('env', 'RS_IS_DOCKER') | bool)
+
+- name: SSH Port Swap Configuration
+  include_tasks:
+    file: "ssh_port_swap.yml"
+    apply:
+      become: yes
+  when: not (lookup('env', 'RS_IS_DOCKER') | bool)
+
 - name: SSH Honeypot Configuration
   include_tasks:
-    file: "{{ item.filename }}"
+    file: "cowrie.yml"
     apply:
-      become: "{{ item.become | default('no') }}"
-  loop:
-    - filename: os.yml
-      become: yes
-    - filename: ssh_port_swap.yml
-      become: yes
-    - filename: cowrie.yml
+      become: no
