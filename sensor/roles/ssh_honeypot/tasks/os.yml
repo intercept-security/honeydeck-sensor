@@ -6,8 +6,6 @@
   yum:
     name: '*'
     state: latest
-  vars:
-    ansible_python_interpreter: /usr/bin/python
   when: ansible_os_family=='RedHat'
 
 - name: Update all the things!
@@ -27,12 +25,9 @@
 - name: Install required packages
   yum:
     name: 
-      - python-pip
       - firewalld
     state: latest
     lock_timeout: 60 # Ansible bug: https://github.com/ansible/ansible/issues/56583
-  vars:
-    ansible_python_interpreter: /usr/bin/python
   when: ansible_os_family=='RedHat'
 
 - name: Install required packages
@@ -55,8 +50,6 @@
     permanent: yes
     immediate: yes
     state: enabled
-  vars:
-    ansible_python_interpreter: /usr/bin/python
   when: ansible_os_family=='RedHat'
 
 - name: Open Alternative SSH Port
